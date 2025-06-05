@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const frontpageImage = '/images/frontpage.jpg';
+const frontpageImage = `${process.env.PUBLIC_URL}/images/frontpage.jpg`;
 
 const HeroSection = styled.section`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);

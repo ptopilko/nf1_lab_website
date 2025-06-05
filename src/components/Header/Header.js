@@ -34,7 +34,7 @@ const Logo = styled(Link)`
   }
 `;
 
-const Nav = styled.nav`
+const Nav = styled(({ isOpen, ...rest }) => <nav {...rest} />)`
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
     position: fixed;
     top: 0;
@@ -109,7 +109,7 @@ const MobileMenuButton = styled.button`
   }
 `;
 
-const Overlay = styled.div`
+const Overlay = styled(({ isOpen, ...rest }) => <div {...rest} />)`
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: fixed;
   top: 0;
