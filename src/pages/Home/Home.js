@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import researchImage from '../../assets/images/research-collage.jpg';
+
+const frontpageImage = '/images/frontpage.jpg';
 
 const HeroSection = styled.section`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
@@ -133,14 +134,32 @@ const IconWrapper = styled.div`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const ResearchImage = styled(motion.img)`
+const FrontpageImage = styled(motion.div)`
   width: 100%;
-  max-width: 1000px;
-  height: auto;
+  max-width: 1200px;
+  height: 500px;
+  background-image: url(${frontpageImage});
+  background-size: cover;
+  background-position: center;
   border-radius: 8px;
   margin: 3rem auto;
-  display: block;
   box-shadow: ${({ theme }) => theme.shadows.lg};
+  position: relative;
+  overflow: hidden;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    height: 300px;
+  }
 `;
 
 const Home = () => {
@@ -218,18 +237,13 @@ const Home = () => {
         </Container>
       </Section>
 
-      <Section style={{ backgroundColor: '#f9f9f9' }}>
-        <Container>
-          <SectionTitle>Our Research in Action</SectionTitle>
-          <ResearchImage 
-            src={researchImage} 
-            alt="NF1 Research Collage"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          />
-        </Container>
+      <Section style={{ padding: '0', marginTop: '4rem' }}>
+        <FrontpageImage 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        />
       </Section>
     </>
   );
