@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import researchImage from '../../assets/images/research-collage.jpg';
 
 const HeroSection = styled.section`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
@@ -132,6 +133,16 @@ const IconWrapper = styled.div`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
+const ResearchImage = styled(motion.img)`
+  width: 100%;
+  max-width: 1000px;
+  height: auto;
+  border-radius: 8px;
+  margin: 3rem auto;
+  display: block;
+  box-shadow: ${({ theme }) => theme.shadows.lg};
+`;
+
 const Home = () => {
   return (
     <>
@@ -204,6 +215,20 @@ const Home = () => {
               <p>Providing comprehensive care and support for individuals and families affected by NF1.</p>
             </FeatureCard>
           </FeaturesGrid>
+        </Container>
+      </Section>
+
+      <Section style={{ backgroundColor: '#f9f9f9' }}>
+        <Container>
+          <SectionTitle>Our Research in Action</SectionTitle>
+          <ResearchImage 
+            src={researchImage} 
+            alt="NF1 Research Collage"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          />
         </Container>
       </Section>
     </>
