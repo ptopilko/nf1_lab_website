@@ -2,8 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-const frontpageImage = `${process.env.PUBLIC_URL}/images/frontpage.jpg`;
-
 const HeroSection = styled.section`
   background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
   color: ${({ theme }) => theme.colors.white};
@@ -41,7 +39,7 @@ const HeroSubtitle = styled(motion.p)`
 
 const Button = styled(motion.a)`
   display: inline-block;
-  background-color: ${({ theme }) => theme.colors.accent};
+  background-color: #ffa167;
   color: ${({ theme }) => theme.colors.white};
   padding: 0.75rem 2rem;
   border-radius: 50px;
@@ -54,18 +52,20 @@ const Button = styled(motion.a)`
   
   &:hover {
     background-color: transparent;
-    border-color: ${({ theme }) => theme.colors.accent};
-    color: ${({ theme }) => theme.colors.accent};
+    border-color: #ffa167;
+    color: #ffa167;
   }
 `;
 
 const SecondaryButton = styled(Button)`
   background-color: transparent;
   border: 2px solid ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.white};
   
   &:hover {
-    background-color: ${({ theme }) => theme.colors.white};
-    color: ${({ theme }) => theme.colors.primary};
+    background-color: #ffa167;
+    border-color: #ffa167;
+    color: white;
   }
 `;
 
@@ -134,35 +134,43 @@ const IconWrapper = styled.div`
   color: ${({ theme }) => theme.colors.primary};
 `;
 
-const FrontpageImage = styled(motion.div)`
+const ImageContainer = styled(motion.div)`
   width: 100%;
   max-width: 1200px;
-  height: 500px;
-  background-image: url(${frontpageImage});
-  background-size: cover;
-  background-position: center;
-  border-radius: 8px;
   margin: 3rem auto;
-  box-shadow: ${({ theme }) => theme.shadows.lg};
-  position: relative;
-  overflow: hidden;
+  padding: 2rem;
+  text-align: center;
+  border: 2px dashed #ccc;
   
-  &::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.2);
+  img {
+    max-width: 100%;
+    height: auto;
+    max-height: 500px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: block;
+    margin: 0 auto;
   }
   
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    height: 300px;
+  .debug-info {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.9rem;
   }
 `;
 
 const Home = () => {
+  // Debug: Log the image path
+  const imagePath = '/images/frontpage.jpg';
+  console.log('Image path:', imagePath);
+  
+  // Test if image exists
+  const testImage = new Image();
+  testImage.src = imagePath;
+  testImage.onload = () => console.log('Image exists and loaded successfully');
+  testImage.onerror = () => console.error('Failed to load image from:', testImage.src);
+  
   return (
     <>
       <HeroSection>
@@ -179,48 +187,85 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Dedicated to understanding the molecular mechanisms of NF1 and developing innovative treatments to improve the lives of patients worldwide.
+            Dedicated to understanding the molecular mechanisms of NF1 and developing novel therapeutic strategies
           </HeroSubtitle>
-          <motion.div
+          <Button
+            as={motion.a}
+            href="/research"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap' }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
-            <Button href="/research" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              Our Research
-            </Button>
-            <SecondaryButton href="/contact" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              Contact Us
-            </SecondaryButton>
-          </motion.div>
+            Our Research
+          </Button>
+          <SecondaryButton
+            as={motion.a}
+            href="/team"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Meet the Team
+          </SecondaryButton>
         </Container>
       </HeroSection>
 
       <Section>
         <Container>
-          <SectionTitle>Our Focus Areas</SectionTitle>
+          <SectionTitle>Our Mission</SectionTitle>
+          <p style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: '1.8' }}>
+            The NF1 Research Lab is committed to advancing our understanding of Neurofibromatosis Type 1 through innovative research, collaborative science, and the translation of discoveries into improved patient outcomes.
+          </p>
+          
+          <ImageContainer
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <h3>Debug Image Container</h3>
+            <p className="debug-info">Trying to load image from: {imagePath}</p>
+            <img 
+              src={imagePath} 
+              alt="NF1 Research Lab" 
+              onLoad={(e) => {
+                console.log('Image loaded successfully', e);
+                console.log('Image dimensions:', e.target.naturalWidth, 'x', e.target.naturalHeight);
+              }}
+              onError={(e) => {
+                console.error('Image failed to load', e);
+                console.error('Image source:', e.target.src);
+              }}
+              style={{
+                border: '3px solid #28a745',
+                maxWidth: '100%',
+                height: 'auto'
+              }}
+            />
+            <p className="debug-info">Check browser console for loading status</p>
+          </ImageContainer>
+        </Container>
+      </Section>
+
+      <Section style={{ backgroundColor: '#f8f9fa' }}>
+        <Container>
+          <SectionTitle>Our Research Focus</SectionTitle>
           <FeaturesGrid>
-            <FeatureCard
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <IconWrapper>🧬</IconWrapper>
-              <h3>Molecular Mechanisms</h3>
-              <p>Investigating the genetic and molecular basis of NF1 to identify new therapeutic targets.</p>
-            </FeatureCard>
-            
             <FeatureCard
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <IconWrapper>💊</IconWrapper>
-              <h3>Drug Development</h3>
-              <p>Developing and testing novel treatments to improve outcomes for NF1 patients.</p>
+              <IconWrapper>
+                <i className="fas fa-dna"></i>
+              </IconWrapper>
+              <h3>Molecular Mechanisms</h3>
+              <p>Investigating the genetic and molecular pathways involved in NF1 pathogenesis to identify novel therapeutic targets.</p>
             </FeatureCard>
             
             <FeatureCard
@@ -229,21 +274,27 @@ const Home = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <IconWrapper>👥</IconWrapper>
-              <h3>Patient Care</h3>
-              <p>Providing comprehensive care and support for individuals and families affected by NF1.</p>
+              <IconWrapper>
+                <i className="fas fa-pills"></i>
+              </IconWrapper>
+              <h3>Drug Discovery</h3>
+              <p>Developing and testing new compounds and repurposed drugs to treat NF1-related symptoms and complications.</p>
+            </FeatureCard>
+            
+            <FeatureCard
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <IconWrapper>
+                <i className="fas fa-microscope"></i>
+              </IconWrapper>
+              <h3>Translational Research</h3>
+              <p>Bridging the gap between laboratory discoveries and clinical applications to improve patient care.</p>
             </FeatureCard>
           </FeaturesGrid>
         </Container>
-      </Section>
-
-      <Section style={{ padding: '0', marginTop: '4rem' }}>
-        <FrontpageImage 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        />
       </Section>
     </>
   );
