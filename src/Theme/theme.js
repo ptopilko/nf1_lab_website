@@ -11,8 +11,8 @@ export const theme = {
     border: '#dfe6e9',
   },
   fonts: {
-    primary: '"Open Sans", sans-serif',
-    secondary: '"Roboto", sans-serif',
+    primary: '"Century Gothic", "Arial", sans-serif',
+    secondary: '"Century Gothic", "Arial", sans-serif',
   },
   breakpoints: {
     sm: '640px',

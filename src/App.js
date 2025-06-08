@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 import { theme } from './Theme/theme';
 import { GlobalStyles } from './styles/GlobalStyles';
@@ -13,12 +13,13 @@ import Contact from './pages/Contact/Contact';
 import NotFound from './pages/NotFound/NotFound';
 
 function App() {
+  console.log('App component rendered');
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Router>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout><Outlet /></Layout>}>
             <Route index element={<Home />} />
             <Route path="research" element={<Research />} />
             <Route path="team" element={<Team />} />

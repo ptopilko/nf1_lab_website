@@ -3,38 +3,69 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const HeroSection = styled.section`
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary} 0%, ${({ theme }) => theme.colors.secondary} 100%);
+  background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(52, 152, 219, 0.8)), 
+              url('/images/frontpage.jpg') no-repeat center center/cover;
   color: ${({ theme }) => theme.colors.white};
-  padding: 6rem 0;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   position: relative;
   overflow: hidden;
+  padding: 2rem 0;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    min-height: 70vh;
+  }
 `;
 
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  padding: 2rem;
   position: relative;
   z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
 `;
 
 const HeroTitle = styled(motion.h1)`
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  color: ${({ theme }) => theme.colors.white};
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    font-size: 2.25rem;
+    font-size: 2.5rem;
+  }
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    font-size: 2rem;
   }
 `;
 
 const HeroSubtitle = styled(motion.p)`
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   max-width: 800px;
-  margin: 0 auto 2.5rem;
-  opacity: 0.9;
+  margin: 0 auto 3rem;
+  color: ${({ theme }) => theme.colors.white};
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
   line-height: 1.6;
+  font-weight: 300;
+  
+  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
+    font-size: 1.25rem;
+    margin-bottom: 2rem;
+  }
 `;
 
 const Button = styled(motion.a)`
@@ -136,40 +167,27 @@ const IconWrapper = styled.div`
 
 const ImageContainer = styled(motion.div)`
   width: 100%;
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 2rem;
-  text-align: center;
-  border: 2px dashed #ccc;
+  max-width: 1000px;
+  margin: 4rem auto;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
   
   img {
-    max-width: 100%;
+    width: 100%;
     height: auto;
-    max-height: 500px;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     display: block;
-    margin: 0 auto;
-  }
-  
-  .debug-info {
-    margin-top: 1rem;
-    color: #666;
-    font-size: 0.9rem;
+    transition: transform 0.5s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
   }
 `;
 
 const Home = () => {
   // Debug: Log the image path
   const imagePath = '/images/frontpage.jpg';
-  console.log('Image path:', imagePath);
-  
-  // Test if image exists
-  const testImage = new Image();
-  testImage.src = imagePath;
-  testImage.onload = () => console.log('Image exists and loaded successfully');
-  testImage.onerror = () => console.error('Failed to load image from:', testImage.src);
   
   return (
     <>
@@ -216,7 +234,7 @@ const Home = () => {
 
       <Section>
         <Container>
-          <SectionTitle>Our Mission</SectionTitle>
+          <SectionTitle>Welcome to the NF1 Research Lab</SectionTitle>
           <p style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: '1.8' }}>
             The NF1 Research Lab is committed to advancing our understanding of Neurofibromatosis Type 1 through innovative research, collaborative science, and the translation of discoveries into improved patient outcomes.
           </p>
@@ -227,39 +245,17 @@ const Home = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <h3>Debug Image Container</h3>
-            <p className="debug-info">Trying to load image from: {imagePath}</p>
             <img 
               src={imagePath} 
-              alt="NF1 Research Lab" 
-              onLoad={(e) => {
-                console.log('Image loaded successfully', e);
-                console.log('Image dimensions:', e.target.naturalWidth, 'x', e.target.naturalHeight);
-              }}
-              onError={(e) => {
-                console.error('Image failed to load', e);
-                console.error('Image source:', e.target.src);
-              }}
-              style={{
-                border: '3px solid #28a745',
-                maxWidth: '100%',
-                height: 'auto'
-              }}
+              alt="NF1 Research Lab - Advancing the understanding of Neurofibromatosis Type 1" 
             />
-            <p className="debug-info">Check browser console for loading status</p>
           </ImageContainer>
-        </Container>
-      </Section>
-
-      <Section style={{ backgroundColor: '#f8f9fa' }}>
-        <Container>
-          <SectionTitle>Our Research Focus</SectionTitle>
+          
           <FeaturesGrid>
             <FeatureCard
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.3, delay: 0.1 }}
             >
               <IconWrapper>
                 <i className="fas fa-dna"></i>
