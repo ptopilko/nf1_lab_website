@@ -2,22 +2,26 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+const PageBackground = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('/images/frontpage.jpg') no-repeat center center/cover;
+  z-index: -1;
+`;
+
 const HeroSection = styled.section`
-  background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(52, 152, 219, 0.8)), 
-              url('/images/frontpage.jpg') no-repeat center center/cover;
   color: ${({ theme }) => theme.colors.white};
-  min-height: 80vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
-  overflow: hidden;
-  padding: 2rem 0;
-  
-  @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    min-height: 70vh;
-  }
+  padding: 6rem 0;
+  background: rgba(0, 0, 0, 0.3);
 `;
 
 const Container = styled.div`
@@ -26,13 +30,8 @@ const Container = styled.div`
   padding: 2rem;
   position: relative;
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 12px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   
   @media (max-width: ${({ theme }) => theme.breakpoints.md}) {
-    margin: 1rem;
     padding: 1.5rem;
   }
 `;
@@ -100,97 +99,12 @@ const SecondaryButton = styled(Button)`
   }
 `;
 
-const Section = styled.section`
-  padding: 5rem 0;
-`;
-
-const SectionTitle = styled.h2`
-  text-align: center;
-  font-size: 2.25rem;
-  margin-bottom: 3rem;
-  color: ${({ theme }) => theme.colors.primary};
-  position: relative;
-  
-  &::after {
-    content: '';
-    display: block;
-    width: 80px;
-    height: 4px;
-    background-color: ${({ theme }) => theme.colors.accent};
-    margin: 1rem auto 0;
-  }
-`;
-
-const FeaturesGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-`;
-
-const FeatureCard = styled(motion.div)`
-  background-color: ${({ theme }) => theme.colors.white};
-  border-radius: 8px;
-  padding: 2rem;
-  box-shadow: ${({ theme }) => theme.shadows.sm};
-  text-align: center;
-  transition: ${({ theme }) => theme.transitions.default};
-  
-  &:hover {
-    transform: translateY(-10px);
-    box-shadow: ${({ theme }) => theme.shadows.lg};
-  }
-  
-  h3 {
-    color: ${({ theme }) => theme.colors.primary};
-    margin: 1.5rem 0 1rem;
-  }
-  
-  p {
-    color: ${({ theme }) => theme.colors.lightText};
-    line-height: 1.6;
-  }
-`;
-
-const IconWrapper = styled.div`
-  width: 80px;
-  height: 80px;
-  background-color: ${({ theme }) => theme.colors.lightGray};
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  font-size: 2rem;
-  color: ${({ theme }) => theme.colors.primary};
-`;
-
-const ImageContainer = styled(motion.div)`
-  width: 100%;
-  max-width: 1000px;
-  margin: 4rem auto;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  
-  img {
-    width: 100%;
-    height: auto;
-    display: block;
-    transition: transform 0.5s ease;
-    
-    &:hover {
-      transform: scale(1.02);
-    }
-  }
-`;
 
 const Home = () => {
-  // Debug: Log the image path
-  const imagePath = '/images/frontpage.jpg';
   
   return (
     <>
+      <PageBackground />
       <HeroSection>
         <Container>
           <HeroTitle
@@ -232,66 +146,7 @@ const Home = () => {
         </Container>
       </HeroSection>
 
-      <Section>
-        <Container>
-          <SectionTitle>Welcome to the NF1 Research Lab</SectionTitle>
-          <p style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: '1.8' }}>
-            The NF1 Research Lab is committed to advancing our understanding of Neurofibromatosis Type 1 through innovative research, collaborative science, and the translation of discoveries into improved patient outcomes.
-          </p>
-          
-          <ImageContainer
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
-            <img 
-              src={imagePath} 
-              alt="NF1 Research Lab - Advancing the understanding of Neurofibromatosis Type 1" 
-            />
-          </ImageContainer>
-          
-          <FeaturesGrid>
-            <FeatureCard
-              whileHover={{ scale: 1.05 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-            >
-              <IconWrapper>
-                <i className="fas fa-dna"></i>
-              </IconWrapper>
-              <h3>Molecular Mechanisms</h3>
-              <p>Investigating the genetic and molecular pathways involved in NF1 pathogenesis to identify novel therapeutic targets.</p>
-            </FeatureCard>
-            
-            <FeatureCard
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <IconWrapper>
-                <i className="fas fa-pills"></i>
-              </IconWrapper>
-              <h3>Drug Discovery</h3>
-              <p>Developing and testing new compounds and repurposed drugs to treat NF1-related symptoms and complications.</p>
-            </FeatureCard>
-            
-            <FeatureCard
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <IconWrapper>
-                <i className="fas fa-microscope"></i>
-              </IconWrapper>
-              <h3>Translational Research</h3>
-              <p>Bridging the gap between laboratory discoveries and clinical applications to improve patient care.</p>
-            </FeatureCard>
-          </FeaturesGrid>
-        </Container>
-      </Section>
+
     </>
   );
 };
